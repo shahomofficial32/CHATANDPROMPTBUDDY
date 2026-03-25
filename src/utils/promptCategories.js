@@ -3,144 +3,182 @@ export const promptCategories = [
     id: "writing",
     name: "Writing",
     prompts: [
-      { title: "Blog Post Intro", instruction: "Write a catchy introduction for a blog post about [Topic]." },
-      { title: "Grammar Check", instruction: "Check this text for grammar and spelling errors, and suggest improvements: [Paste Text]" },
-      { title: "Email Draft", instruction: "Draft a professional email to [Recipient] regarding [Subject]." },
-      { title: "Summarize Article", instruction: "Summarize the following article into 3 concise bullet points: [Paste Article]" },
-      { title: "Rewrite for Clarity", instruction: "Rewrite this paragraph to make it clearer and more engaging: [Paste Text]" },
-      { title: "Catchy Headline", instruction: "Generate 5 catchy headlines for an article about [Topic]." },
-      { title: "Social Media Caption", instruction: "Write an engaging Instagram caption for a photo of [Subject]." },
-      { title: "Persuasive Pitch", instruction: "Write a short persuasive pitch for [Product/Idea]." },
-      { title: "Tone Adjustment", instruction: "Change the tone of this text to be more [Formal/Casual/Humorous]: [Paste Text]" },
-      { title: "Conclusion Paragraph", instruction: "Write a strong concluding paragraph for an essay about [Topic]." }
+      { 
+        title: "Blog Post Intro", 
+        instruction: "Act as an expert content strategist. Write a high-engagement introduction for a blog post about [Specific Topic]. The target audience is [Audience], and the desired tone is [Tone: e.g., Authoritative/Witty/Empathetic]. Start with a [Hook Type: e.g., Surprising Statistic/Provocative Question/Personal Anecdote] and ensure the transition to the main value proposition is seamless. Goal length: [Word Count] words." 
+      },
+      { 
+        title: "Grammar & Style Specialist", 
+        instruction: "Conduct a comprehensive linguistic audit of the following text: [Paste Text]. Beyond fixing grammar and spelling, please improve the [Flow/Cadence], eliminate [Passive Voice/Jargon], and suggest 3 specific ways to make the writing more [Persuasive/Concise/Professional]. Provide a 'Before' and 'After' comparison for key changes." 
+      },
+      { 
+        title: "Executive Email Draft", 
+        instruction: "Draft a professional email to [Recipient Name/Role] regarding [Specific Subject]. The primary objective is to [Call to Action: e.g., Schedule a Meeting/Request Approval/Provide Status Update]. Maintain a [Direct/Soft/Formal] tone and include a brief mention of [Context/Previous Interaction] to build rapport. End with a clear, low-friction next step." 
+      },
+      { 
+        title: "Deep-Dive Summary", 
+        instruction: "Analyze the provided article: [Paste Article]. Distill the core thesis into 3 high-impact bullet points. For each point, provide a 'Why it matters' explanation for [Specific Stakeholder/Persona]. Ensure the summary captures the [Nuance/Data Points/Controversial Angles] mentioned in the original text." 
+      },
+      { 
+        title: "Psychological Headline Generator", 
+        instruction: "Generate 10 high-CTR (Click-Through Rate) headlines for an article about [Topic]. Use different psychological triggers such as [Triggers: e.g., Curiosity/Urgency/Social Proof/Benefit-Driven]. The headlines should be optimized for [Platform: e.g., LinkedIn/Twitter/Search Engines] and target [Specific Demographic]." 
+      }
     ]
   },
   {
     id: "study",
     name: "Study",
     prompts: [
-      { title: "Explain Like I'm 5", instruction: "Explain the concept of [Topic] simply, as if I were a 5-year-old." },
-      { title: "Study Plan", instruction: "Create a 7-day study schedule to prepare for a [Subject] exam." },
-      { title: "Flashcard Generator", instruction: "Create 10 question-and-answer flashcards for [Topic]." },
-      { title: "Math Problem Solver", instruction: "Explain step-by-step how to solve this math problem: [Insert Problem]" },
-      { title: "Historical Event", instruction: "Give a brief overview of [Historical Event], including key dates and figures." },
-      { title: "Concept Comparison", instruction: "Compare and contrast [Concept A] and [Concept B]." },
-      { title: "Generate Quiz", instruction: "Create a multiple-choice quiz with 5 questions about [Topic]." },
-      { title: "Mnemonic Device", instruction: "Create a mnemonic device to help me remember [List/Concept]." },
-      { title: "Literature Theme", instruction: "Analyze the main themes in the book [Book Title]." },
-      { title: "Scientific Method", instruction: "Help me design a simple experiment to test [Hypothesis]." }
+      { 
+        title: "Feynman Technique (ELI5)", 
+        instruction: "Explain the complex concept of [Topic] using the Feynman Technique. Break it down for a [Level: e.g., 5-year-old/Non-expert/High Schooler]. Use a vivid [Analogy/Metaphor] related to [Familiar Subject] to clarify the most difficult part. Avoid all technical jargon unless you define it first using simple language." 
+      },
+      { 
+        title: "Adaptive Study Architect", 
+        instruction: "Create a data-driven 7-day study schedule for a [Subject] exam. I have [Number] hours per day available. Focus [Percentage]% of the time on [Weakest Topic 1] and [Weakest Topic 2]. Include specific [Active Recall/Spaced Repetition] activities for each session and suggest a 'Self-Test' format for the final day." 
+      },
+      { 
+        title: "Socratic Flashcard Set", 
+        instruction: "Generate 15 high-quality flashcards for [Detailed Topic]. Format each card as: 'Question: [Probing Question]' and 'Answer: [Detailed yet concise explanation]'. Ensure the cards cover [Foundational Concepts], [Edge Cases], and [Practical Applications]. Include 3 'Challenge' cards that require connecting [Topic] to [Related Field]." 
+      },
+      { 
+        title: "Step-by-Step Logic Tutor", 
+        instruction: "Solve the following [Math/Logic/Science] problem: [Insert Problem]. Do not just provide the answer. Act as a patient tutor and walk through the [First Principles/Theorems] required. Highlight common [Mistakes/Pitfalls] students make at step [Specific Step Number] and provide a similar 'Practice Problem' to test my understanding." 
+      }
     ]
   },
   {
     id: "business",
     name: "Business",
     prompts: [
-      { title: "Meeting Agenda", instruction: "Draft an agenda for a 30-minute meeting about [Topic]." },
-      { title: "SWOT Analysis", instruction: "Perform a SWOT analysis for a new business in the [Industry] sector." },
-      { title: "Marketing Strategy", instruction: "Outline a basic digital marketing strategy for a [Product/Service]." },
-      { title: "Customer Persona", instruction: "Create a detailed customer persona for a [Type of Business]." },
-      { title: "Value Proposition", instruction: "Help me write a compelling value proposition for [Product/Service]." },
-      { title: "Competitor Analysis", instruction: "What are the key factors to look for when analyzing competitors in [Industry]?" },
-      { title: "Sales Script", instruction: "Write a cold-call sales script for selling [Product/Service]." },
-      { title: "Business Name Ideas", instruction: "Generate 10 creative business names for a company that does [Activity]." },
-      { title: "Press Release", instruction: "Draft a short press release announcing [New Product/Event]." },
-      { title: "Feedback Request", instruction: "Write a polite email asking a client for feedback on our recent project." }
+      { 
+        title: "Strategic Meeting Agenda", 
+        instruction: "Design a high-productivity agenda for a [Duration]-minute meeting regarding [Project/Topic]. Include a 'Desired Outcome' for the session. Break the time into segments for [Information Sharing], [Ideation], and [Decision Making]. Assign a [Role/Persona] responsible for each section and include 3 'Pre-read' questions to send to attendees." 
+      },
+      { 
+        title: "Comprehensive SWOT Analysis", 
+        instruction: "Perform a deep-dive SWOT analysis for a [Company Type/Product] operating in the [Specific Industry]. Identify 4 items for each category. For the 'Threats' section, consider [Economic/Technological/Regulatory] factors specifically. Conclude with 2 'Strategic Moves' that leverage a Strength to neutralize a Threat." 
+      },
+      { 
+        title: "GTM (Go-To-Market) Strategy", 
+        instruction: "Outline a 90-day digital marketing strategy for [Product/Service]. The primary goal is [Goal: e.g., Lead Gen/Brand Awareness]. Define the [Primary Channel: e.g., SEO/Paid Social/Email], the [Key Metric for Success], and a [Budget Allocation] strategy. Include a specific tactic for overcoming the [Common Industry Objection]." 
+      },
+      { 
+        title: "Hyper-Specific Customer Persona", 
+        instruction: "Create a detailed 'Buyer Persona' for [Type of Business]. Include [Demographics], [Psychographics], and their 'Day in the Life'. Specifically focus on their [Pain Points/Fears] and their [Desired Gains/Aspirations]. Give this persona a name and list 3 specific 'Value Hooks' that would trigger them to purchase [Product Name]." 
+      }
     ]
   },
   {
     id: "coding",
     name: "Coding",
     prompts: [
-      { title: "Code Explanation", instruction: "Explain what this snippet of [Language] code does: [Paste Code]" },
-      { title: "Debug Code", instruction: "Find and fix the error in this [Language] code: [Paste Code]" },
-      { title: "Write Function", instruction: "Write a [Language] function that [Describe Action]." },
-      { title: "Code Optimization", instruction: "How can I make this [Language] code more efficient? [Paste Code]" },
-      { title: "Regex Generator", instruction: "Write a Regular Expression that matches [Specific Pattern]." },
-      { title: "Database Query", instruction: "Write a SQL query to select [Data] from [Table] where [Condition]." },
-      { title: "Unit Test Writer", instruction: "Write unit tests for this [Language] function: [Paste Code]" },
-      { title: "API Fetch Example", instruction: "Show me an example of how to fetch data from an API using React and Axios." },
-      { title: "CSS Styling", instruction: "Provide Tailwind CSS classes to create a [Describe UI Element]." },
-      { title: "Concept: Promises", instruction: "Explain how Promises/Async Await works in JavaScript." }
+      { 
+        title: "Architectural Code Breakdown", 
+        instruction: "Explain the logic and flow of this [Language/Framework] snippet: [Paste Code]. Identify the [Design Patterns] used, explain how it handles [Error Handling/Edge Cases], and describe the Big O [Time/Space Complexity]. Suggest how this code interacts with [Related System: e.g., a REST API/Redux Store]." 
+      },
+      { 
+        title: "Senior Dev Debugger", 
+        instruction: "Identify the bug in this [Language] code: [Paste Code]. I am receiving the error: [Paste Error Message]. Explain *why* the error occurred at a system level, provide the corrected code, and suggest a [Unit Test/Best Practice] to prevent this regression in the future. Focus on [Performance/Readability] in your fix." 
+      },
+      { 
+        title: "Scalable Function Writer", 
+        instruction: "Write a [Language] function that [Detailed Action]. Constraints: [Constraints: e.g., Must use Recursion/No external libraries/Time complexity < O(n^2)]. Include [JSDoc/Type Hints], comprehensive [Input Validation], and 3 test cases: [Happy Path], [Empty Input], and [Invalid Data Type]." 
+      },
+      { 
+        title: "Performance Optimization Audit", 
+        instruction: "Analyze this [Language] code for performance bottlenecks: [Paste Code]. Suggest 3 optimizations to reduce [Memory Usage/CPU Cycles/Network Requests]. For each suggestion, explain the trade-off regarding [Code Maintainability/Readability]. Provide the refactored 'High-Performance' version." 
+      }
     ]
   },
   {
     id: "creative",
     name: "Creative",
     prompts: [
-      { title: "Story Prompt", instruction: "Give me a creative writing prompt about [Subject/Genre]." },
-      { title: "Character Backstory", instruction: "Generate a detailed backstory for a character who is a [Profession/Role]." },
-      { title: "Poem Generator", instruction: "Write a short poem about [Topic] in the style of [Author/Style]." },
-      { title: "Song Lyrics", instruction: "Write a chorus and one verse for a song about [Topic]." },
-      { title: "World Building", instruction: "Describe the political system of a fictional sci-fi planet." },
-      { title: "Plot Twist Ideas", instruction: "Give me 3 unexpected plot twists for a story where [Brief Setup]." },
-      { title: "Dialogue Generator", instruction: "Write a dialogue scene between two people arguing about [Topic]." },
-      { title: "Art Prompt", instruction: "Describe a vivid scene for me to paint/draw featuring [Subject]." },
-      { title: "Joke Writer", instruction: "Write a clean joke about [Topic]." },
-      { title: "Roleplay Scenario", instruction: "Set up a roleplay scenario where I am a [Role] and you are a [Role]." }
+      { 
+        title: "Multi-Dimensional Story Prompt", 
+        instruction: "Generate a high-concept [Genre] story prompt centered on [Object/Concept]. The setting should be [Setting: e.g., Dystopian Underwater City] and the central conflict must involve a [Moral Dilemma]. Include a 'Hook' for the first page and a [Subversion of a Common Trope] to keep it fresh." 
+      },
+      { 
+        title: "Psychological Character Dossier", 
+        instruction: "Create a 3-dimensional character backstory for a [Profession/Role]. Define their [Internal Want] vs. their [External Need]. Include a pivotal 'Ghost' (a traumatic or defining past event) that influences their [Flaw/Strength]. Detail their [Speech Patterns/Mannerisms] and how they react under [Specific Stressor]." 
+      },
+      { 
+        title: "Stylistic Verse Generator", 
+        instruction: "Write a poem about [Topic] in the distinct style of [Author/Movement: e.g., Sylvia Plath/Beat Generation]. Use [Specific Literary Device: e.g., Enjambment/Consonance] and focus on imagery related to [Sensory Detail: e.g., Metallic smells/Cold textures]. Ensure the rhythm mirrors the [Emotional State: e.g., Anxious/Peaceful] of the piece." 
+      }
     ]
   },
   {
     id: "health",
     name: "Health & Fitness",
     prompts: [
-      { title: "Workout Routine", instruction: "Create a 30-minute bodyweight workout routine for beginners." },
-      { title: "Meal Prep Ideas", instruction: "Suggest 5 healthy, high-protein lunch ideas for meal prep." },
-      { title: "Stretching Guide", instruction: "List 5 essential stretches for someone who sits at a desk all day." },
-      { title: "Calorie Estimate", instruction: "Estimate the calories and macros for a meal consisting of [Food Items]." },
-      { title: "Sleep Hygiene", instruction: "Give me tips on how to improve my sleep quality." },
-      { title: "Motivation Boost", instruction: "Write a short, motivating paragraph to get me to the gym today." },
-      { title: "Running Plan", instruction: "Create a 4-week plan to help me run my first 5K." },
-      { title: "Healthy Snack Alternative", instruction: "What is a healthy alternative to eating [Junk Food]?" },
-      { title: "Mindfulness Exercise", instruction: "Guide me through a 2-minute breathing or mindfulness exercise." },
-      { title: "Hydration Tips", instruction: "Give me creative ways to ensure I drink enough water daily." }
+      { 
+        title: "Precision Workout Architect", 
+        instruction: "Act as a world-class personal trainer. Create a [Duration]-minute [Bodyweight/Gym-based] workout routine for a [Fitness Level: e.g., Beginner/Athlete] whose primary goal is [Goal: e.g., Hypertrophy/Explosive Power]. Focus on the [Muscle Group] and include a specific [Warm-up] and [Cool-down] protocol. Provide 'Scaling Options' for every exercise." 
+      },
+      { 
+        title: "Nutritional Meal Plan", 
+        instruction: "Act as a certified nutritionist. Suggest 5 healthy, high-protein meal ideas for [Meal Type: e.g., Lunch/Dinner] based on the following dietary restriction: [Restriction: e.g., Vegan/Gluten-Free]. For each meal, provide an estimate of [Calories/Macros] and a 'Time-Saving Hack' for busy professionals." 
+      },
+      { 
+        title: "Sleep Hygiene Protocol", 
+        instruction: "Develop a comprehensive sleep optimization plan for someone who struggles with [Specific Issue: e.g., Racing thoughts at night/Waking up at 3 AM]. Include 3 [Behavioral Adjustments], 2 [Environmental Changes to Bedroom], and a [10-minute Pre-Sleep Ritual]. Base the advice on the latest [Circadian Rhythm] research." 
+      }
     ]
   },
   {
     id: "career",
     name: "Career",
     prompts: [
-      { title: "Resume Summary", instruction: "Write a professional summary for a resume of a [Job Title]." },
-      { title: "Interview Prep", instruction: "What are 5 common interview questions for a [Job Title] role, and how should I answer them?" },
-      { title: "Cover Letter", instruction: "Draft a basic cover letter applying for a [Job Title] position at [Company]." },
-      { title: "Salary Negotiation", instruction: "Give me a script for negotiating a higher salary after a job offer." },
-      { title: "LinkedIn Headline", instruction: "Generate 3 professional LinkedIn headlines for a [Job Title]." },
-      { title: "Career Change", instruction: "What skills are transferable from [Current Job] to [Desired Job]?" },
-      { title: "Resignation Letter", instruction: "Write a polite resignation letter giving two weeks' notice." },
-      { title: "Networking Email", instruction: "Draft a cold outreach message on LinkedIn to connect with someone in [Industry]." },
-      { title: "Skill Development", instruction: "What are the top 3 skills I need to learn to become a [Job Title]?" },
-      { title: "Performance Review", instruction: "Help me write a self-evaluation for my annual performance review as a [Job Title]." }
+      { 
+        title: "ATS-Optimized Resume Summary", 
+        instruction: "Write a high-impact professional summary for a [Job Title] with [Number] years of experience. Incorporate keywords like [Keywords 1, 2, 3] and focus on [Specific Achievement: e.g., Increased revenue by 20%]. Tailor the language to appeal to [Company Type: e.g., Fast-paced Tech Startup/Fortune 500 Firm]." 
+      },
+      { 
+        title: "Behavioral Interview Simulation", 
+        instruction: "Prepare me for a [Job Title] interview at [Company]. Generate 5 behavioral questions based on the [STAR Method]. For each question, provide a 'Winning Response Strategy' and a list of 'Red Flags' to avoid. Focus specifically on the [Core Competency: e.g., Leadership/Technical Depth/Conflict Resolution] required for this role." 
+      },
+      { 
+        title: "Salary Negotiation Script", 
+        instruction: "Draft a script for a salary negotiation for the role of [Job Title]. The current offer is [Current Offer] but my target is [Target Offer] based on [Market Data/Specific Value Added]. Include 3 'Pivot Phrases' to use if the Recruiter mentions [Common Objection: e.g., Budget Caps/Internal Equity]." 
+      }
     ]
   },
   {
     id: "technology",
     name: "Technology",
     prompts: [
-      { title: "Tech Trend", instruction: "Explain the current trend of [Tech Trend, e.g., Web3, AI] and its future impact." },
-      { title: "Gadget Comparison", instruction: "Compare [Device A] and [Device B] for a potential buyer." },
-      { title: "Software Suggestion", instruction: "Recommend 3 software tools for [Task, e.g., Video Editing, Project Management]." },
-      { title: "Troubleshooting", instruction: "How do I troubleshoot a device that is [Describe Problem]?" },
-      { title: "Cybersecurity Basics", instruction: "What are 5 basic steps to secure my personal online accounts?" },
-      { title: "Cloud Computing", instruction: "Explain the difference between IaaS, PaaS, and SaaS." },
-      { title: "Smart Home Setup", instruction: "What is a good beginner setup for a smart home system?" },
-      { title: "Explain Blockchain", instruction: "Explain how blockchain technology works without using overly technical jargon." },
-      { title: "Future of Tech", instruction: "What might the technology landscape look like in 10 years?" },
-      { title: "Tech History", instruction: "Give a brief history of the development of the [Invention, e.g., Smartphone]." }
+      { 
+        title: "Emerging Tech Impact Analysis", 
+        instruction: "Analyze the current state of [Tech Trend: e.g., Generative AI/Quantum Computing] and its predicted impact on the [Specific Industry] over the next [Number] years. Discuss the [Top 3 Ethical Concerns] and identify the [Winner/Loser] companies in this space. Conclude with a 'Future-Proofing' strategy for professionals in this field." 
+      },
+      { 
+        title: "IT Troubleshooting Guide", 
+        instruction: "Act as a Senior IT Support Specialist. Provide a step-by-step troubleshooting guide for a [Device/Software] that is experiencing [Describe Problem]. Organize the guide from [Simplest Fix] to [Advanced Solution]. Include 3 'Pro-tips' to prevent this issue from recurring." 
+      },
+      { 
+        title: "Cybersecurity Audit", 
+        instruction: "Perform a 'Personal Digital Security Audit'. Evaluate the risks associated with [Current Activity: e.g., Working from Public Wi-Fi/Managing 50+ accounts]. Provide 5 actionable steps to secure [Platform: e.g., Mobile Devices/Social Media/Banking] using [Specific Tools: e.g., MFA/Password Managers/VPNs]." 
+      }
     ]
   },
   {
     id: "dailylife",
     name: "Daily Life",
     prompts: [
-      { title: "Recipe Idea", instruction: "Give me a recipe using these ingredients: [List Ingredients]." },
-      { title: "Travel Itinerary", instruction: "Create a 3-day travel itinerary for a trip to [City/Location]." },
-      { title: "Budgeting Tips", instruction: "What is the 50/30/20 rule in personal budgeting?" },
-      { title: "Gift Idea", instruction: "Suggest 5 gift ideas for a [Age]-year-old who likes [Interests]." },
-      { title: "Decluttering Plan", instruction: "Create a step-by-step plan for decluttering my [Room/Area]." },
-      { title: "Movie Recommendation", instruction: "Recommend 3 movies similar to [Movie Title]." },
-      { title: "Time Management", instruction: "Explain the Pomodoro technique and how to implement it." },
-      { title: "Hobby Suggestion", instruction: "Suggest a low-cost hobby I can pick up indoors." },
-      { title: "Plant Care", instruction: "How do I properly care for a [Plant Name]?" },
-      { title: "DIY Project", instruction: "Give me a simple weekend DIY project idea for home improvement." }
+      { 
+        title: "Culinary Ingredient Challenge", 
+        instruction: "Act as a Michelin-star chef. Create a gourmet [Cuisine Type] recipe using only these ingredients: [List Ingredients]. You may use standard pantry staples like [Oil/Salt/Spices]. Provide a [Step-by-step Instruction] set and a 'Professional Plating Tip' to make the dish look high-end." 
+      },
+      { 
+        title: "Hyper-Curated Travel Itinerary", 
+        instruction: "Design a [Number]-day travel itinerary for [City/Location] for a [Traveler Type: e.g., Couple/Solo/Family]. The primary interest is [Interest: e.g., Local Architecture/Hidden Food Gems/Adventure Sports]. Include [Budget Breakdown], 'Best Time of Day' to visit each spot, and 1 'Local Secret' that tourists usually miss." 
+      },
+      { 
+        title: "Personal Finance Architect", 
+        instruction: "Explain the [Financial Strategy: e.g., 50/30/20 Rule/Fire Movement] for someone with a monthly income of [Amount]. Create a sample [Budget Spreadsheet Structure] and identify 3 [Common Financial Leaks] for this income bracket. Suggest a [Low-risk Investment] strategy for their first [Timeframe]." 
+      }
     ]
   }
 ];
