@@ -29,8 +29,6 @@ export default function Chat() {
   const [pendingSubmit, setPendingSubmit] = useState(false);
 
   const messagesEndRef = useRef(null);
-  
-  // FIXED: A secret tracker to prevent the screen from wiping when a new chat URL is created
   const isLocalSubmission = useRef(false);
 
   const scrollToBottom = () => {
@@ -43,12 +41,10 @@ export default function Chat() {
 
   useEffect(() => {
     const loadMessages = async () => {
-      // FIXED: If we just created the chat locally, don't wipe the screen!
       if (isLocalSubmission.current) {
         isLocalSubmission.current = false;
         return; 
       }
-
       if (sessionId) {
         setIsFetchingHistory(true);
         const history = await getChatMessages(sessionId);
@@ -78,9 +74,8 @@ export default function Chat() {
 
     try {
       let activeSessionId = sessionId;
-
       if (!activeSessionId) {
-        isLocalSubmission.current = true; // Tell React not to wipe our screen!
+        isLocalSubmission.current = true;
         activeSessionId = await createChatSession(currentUser.uid, "New Conversation");
         navigate(`/chat/${activeSessionId}`, { replace: true });
         
@@ -90,30 +85,23 @@ export default function Chat() {
       }
 
       await addChatMessage(activeSessionId, userMessage);
-      
       const aiMessageId = uuidv4();
       setMessages(prev => [...prev, { id: aiMessageId, text: '', role: 'assistant', isFavorite: false }]);
       setIsLoading(false); 
 
       const stream = await getGeminiResponseStream(messages, textToProcess);
       let fullResponseText = "";
-
       for await (const chunk of stream) {
         fullResponseText += chunk.text;
-        
         setMessages(prev => 
-          prev.map(msg => 
-            msg.id === aiMessageId ? { ...msg, text: fullResponseText } : msg
-          )
+          prev.map(msg => msg.id === aiMessageId ? { ...msg, text: fullResponseText } : msg)
         );
       }
-
       const finalAiMessage = { text: fullResponseText, role: 'assistant', isFavorite: false };
       await addChatMessage(activeSessionId, finalAiMessage);
-
     } catch (error) {
       console.error(error);
-      alert("Error processing message. Please check your connection or API keys.");
+      alert("Error processing message.");
       setIsLoading(false);
     }
   };
@@ -121,15 +109,12 @@ export default function Chat() {
   const handleSubmit = (e) => {
     e?.preventDefault();
     if (!inputText.trim() || isLoading) return;
-
     const isMatch = validateCategoryMatch(inputText, selectedCategoryId);
-    
     if (!isMatch && !pendingSubmit) {
       setShowWarning(true);
       setPendingSubmit(true);
       return; 
     }
-
     setShowWarning(false);
     setPendingSubmit(false);
     processMessage(inputText);
@@ -141,19 +126,22 @@ export default function Chat() {
     ));
   };
 
-return (
+  return (
     <ChatLayout>
-      <div className="flex flex-col h-full relative">
-        {/* Scrollable Message Area */}
-        <div className="flex-1 overflow-y-auto pb-32">
+      <div className="flex flex-col h-full w-full relative overflow-hidden bg-white dark:bg-gray-950">
+        
+        {/* Scrollable Message Area - Fixed padding for mobile */}
+        <div className="flex-1 overflow-y-auto pt-4 pb-40 px-4 scrollbar-hide">
           {isFetchingHistory ? (
             <div className="flex h-full items-center justify-center">
               <Loader2 className="w-8 h-8 text-indigo-500 animate-spin" />
             </div>
           ) : messages.length === 0 ? (
-            <PromptPanel onSelectPrompt={handleSelectPrompt} />
+            <div className="max-w-4xl mx-auto">
+              <PromptPanel onSelectPrompt={handleSelectPrompt} />
+            </div>
           ) : (
-            <div className="flex flex-col">
+            <div className="max-w-4xl mx-auto flex flex-col gap-6">
               {messages.map((msg) => (
                 <MessageBubble key={msg.id || uuidv4()} message={msg} onToggleFavorite={toggleFavorite} />
               ))}
@@ -162,52 +150,48 @@ return (
           )}
         </div>
 
-        {/* Warning Toast for Category Mismatch */}
+        {/* Warning Toast */}
         {showWarning && (
-          <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 w-full max-w-lg px-4 z-10">
-            <div className="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-lg p-4 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="absolute bottom-32 left-1/2 transform -translate-x-1/2 w-full max-w-lg px-4 z-20">
+            <div className="bg-amber-50 dark:bg-amber-900/80 border border-amber-200 dark:border-amber-700 rounded-2xl p-4 shadow-2xl flex flex-col gap-3 backdrop-blur-md">
               <div className="flex items-center gap-3 text-amber-800 dark:text-amber-200 text-sm font-medium">
                 <AlertTriangle className="w-5 h-5 shrink-0" />
-                <span>This input may not match the selected category.</span>
+                <span>This message doesn't fit the selected category. Continue?</span>
               </div>
-              <div className="flex items-center gap-2 shrink-0">
-                <button onClick={() => { setShowWarning(false); setPendingSubmit(false); }} className="px-3 py-1.5 text-sm font-medium text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-800/50 rounded-md transition-colors">Switch</button>
-                <button onClick={handleSubmit} className="px-3 py-1.5 text-sm font-medium bg-amber-600 hover:bg-amber-700 text-white rounded-md transition-colors shadow-sm">Continue</button>
+              <div className="flex items-center gap-2 justify-end">
+                <button onClick={() => { setShowWarning(false); setPendingSubmit(false); }} className="px-4 py-2 text-sm font-medium text-amber-700 dark:text-amber-300">Cancel</button>
+                <button onClick={handleSubmit} className="px-4 py-2 text-sm font-medium bg-amber-600 text-white rounded-xl shadow-lg">Continue</button>
               </div>
             </div>
           </div>
         )}
 
-        {/* Input Area - Fixed at the bottom for Mobile Responsiveness */}
-        <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-white via-white to-transparent dark:from-gray-950 dark:via-gray-950">
+        {/* Input Area - Pinned to bottom with safe area */}
+        <div className="absolute bottom-0 left-0 right-0 p-4 pb-8 sm:pb-10 bg-gradient-to-t from-white via-white/95 to-transparent dark:from-gray-950 dark:via-gray-950/95 z-10">
           <div className="max-w-4xl mx-auto">
             <form 
               onSubmit={handleSubmit} 
               className={`relative flex items-end gap-2 bg-white dark:bg-gray-800 border ${
-                showWarning ? 'border-amber-400 ring-2 ring-amber-500/20' : 'border-gray-300 dark:border-gray-700 focus-within:ring-2 focus-within:ring-indigo-500/50'
-              } rounded-2xl shadow-xl p-1.5 transition-all`}
+                showWarning ? 'border-amber-400 ring-4 ring-amber-500/10' : 'border-gray-200 dark:border-gray-700 focus-within:ring-4 focus-within:ring-indigo-500/10'
+              } rounded-2xl shadow-2xl p-1.5 transition-all`}
             >
               <textarea
                 value={inputText}
                 onChange={(e) => { setInputText(e.target.value); if (showWarning) setShowWarning(false); }}
                 disabled={isLoading}
                 placeholder="Type a message..."
-                className="w-full max-h-32 min-h-[44px] bg-transparent border-none focus:ring-0 resize-none px-3 py-2.5 text-gray-900 dark:text-white text-base placeholder-gray-400"
+                className="w-full max-h-40 min-h-[48px] bg-transparent border-none focus:ring-0 resize-none px-3 py-3 text-gray-900 dark:text-white text-base"
                 rows="1"
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } }}
               />
               <button 
                 type="submit" 
                 disabled={!inputText.trim() || isLoading} 
-                className={`p-3 text-white rounded-xl transition-colors shrink-0 ${
-                  showWarning ? 'bg-amber-600 hover:bg-amber-700' : 'bg-indigo-600 hover:bg-indigo-700'
-                } disabled:bg-gray-300 dark:disabled:bg-gray-700`}
+                className="p-3.5 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 disabled:bg-gray-200 dark:disabled:bg-gray-800 transition-all shrink-0 shadow-lg shadow-indigo-500/20"
               >
-                {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+                {isLoading ? <Loader2 size={20} className="animate-spin" /> : <Send size={20} />}
               </button>
             </form>
-            {/* Safe area for mobile browsers */}
-            <div className="h-2 sm:hidden"></div>
           </div>
         </div>
       </div>
