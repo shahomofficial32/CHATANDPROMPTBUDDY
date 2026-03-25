@@ -141,9 +141,10 @@ export default function Chat() {
     ));
   };
 
-  return (
+return (
     <ChatLayout>
       <div className="flex flex-col h-full relative">
+        {/* Scrollable Message Area */}
         <div className="flex-1 overflow-y-auto pb-32">
           {isFetchingHistory ? (
             <div className="flex h-full items-center justify-center">
@@ -161,6 +162,7 @@ export default function Chat() {
           )}
         </div>
 
+        {/* Warning Toast for Category Mismatch */}
         {showWarning && (
           <div className="absolute bottom-24 left-1/2 transform -translate-x-1/2 w-full max-w-lg px-4 z-10">
             <div className="bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-700 rounded-lg p-4 shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
@@ -176,22 +178,36 @@ export default function Chat() {
           </div>
         )}
 
-        <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-white via-white to-transparent dark:from-gray-950 dark:via-gray-950">
+        {/* Input Area - Fixed at the bottom for Mobile Responsiveness */}
+        <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-4 bg-gradient-to-t from-white via-white to-transparent dark:from-gray-950 dark:via-gray-950">
           <div className="max-w-4xl mx-auto">
-            <form onSubmit={handleSubmit} className={`relative flex items-end gap-2 bg-white dark:bg-gray-800 border ${showWarning ? 'border-amber-400 dark:border-amber-600 ring-2 ring-amber-500/20' : 'border-gray-300 dark:border-gray-700 focus-within:ring-2 focus-within:ring-indigo-500/50'} rounded-2xl shadow-lg p-2 transition-all`}>
+            <form 
+              onSubmit={handleSubmit} 
+              className={`relative flex items-end gap-2 bg-white dark:bg-gray-800 border ${
+                showWarning ? 'border-amber-400 ring-2 ring-amber-500/20' : 'border-gray-300 dark:border-gray-700 focus-within:ring-2 focus-within:ring-indigo-500/50'
+              } rounded-2xl shadow-xl p-1.5 transition-all`}
+            >
               <textarea
                 value={inputText}
                 onChange={(e) => { setInputText(e.target.value); if (showWarning) setShowWarning(false); }}
                 disabled={isLoading}
-                placeholder="Ask anything or select a prompt from above..."
-                className="w-full max-h-32 min-h-[44px] bg-transparent border-none focus:ring-0 resize-none px-3 py-2.5 text-gray-900 dark:text-white placeholder-gray-400 text-base disabled:opacity-50"
+                placeholder="Type a message..."
+                className="w-full max-h-32 min-h-[44px] bg-transparent border-none focus:ring-0 resize-none px-3 py-2.5 text-gray-900 dark:text-white text-base placeholder-gray-400"
                 rows="1"
                 onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSubmit(e); } }}
               />
-              <button type="submit" disabled={!inputText.trim() || isLoading} className={`p-3 text-white rounded-xl transition-colors shrink-0 mb-0.5 mr-0.5 ${showWarning ? 'bg-amber-600 hover:bg-amber-700' : 'bg-indigo-600 hover:bg-indigo-700'} disabled:bg-gray-300 dark:disabled:bg-gray-700 disabled:cursor-not-allowed`}>
-                {isLoading ? <Loader2 size={18} className="animate-spin translate-x-[1px] translate-y-[-1px]" /> : <Send size={18} className="translate-x-[1px] translate-y-[-1px]" />}
+              <button 
+                type="submit" 
+                disabled={!inputText.trim() || isLoading} 
+                className={`p-3 text-white rounded-xl transition-colors shrink-0 ${
+                  showWarning ? 'bg-amber-600 hover:bg-amber-700' : 'bg-indigo-600 hover:bg-indigo-700'
+                } disabled:bg-gray-300 dark:disabled:bg-gray-700`}
+              >
+                {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
               </button>
             </form>
+            {/* Safe area for mobile browsers */}
+            <div className="h-2 sm:hidden"></div>
           </div>
         </div>
       </div>
