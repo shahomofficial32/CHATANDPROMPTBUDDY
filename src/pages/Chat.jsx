@@ -5,7 +5,7 @@ import ChatLayout from '../components/ChatLayout';
 import PromptPanel from '../components/PromptPanel';
 import MessageBubble from '../components/MessageBubble';
 import { Send, AlertTriangle, Loader2 } from 'lucide-react';
-import { getGeminiResponseStream, generateChatTitle } from '../api/ai';
+import { getGeminiResponseStream } from '../api/ai'; // Removed generateChatTitle to save quota
 import { validateCategoryMatch } from '../utils/validators';
 import { 
   createChatSession, 
@@ -74,34 +74,47 @@ export default function Chat() {
 
     try {
       let activeSessionId = sessionId;
+
       if (!activeSessionId) {
         isLocalSubmission.current = true;
-        activeSessionId = await createChatSession(currentUser.uid, "New Conversation");
+
+        // LOCAL TITLE GENERATION (Saves 1 API Call per new chat)
+        const localTitle = textToProcess.length > 40 
+          ? textToProcess.substring(0, 40).trim() + "..." 
+          : textToProcess.trim();
+
+        // Create session with the trimmed text as the title
+        activeSessionId = await createChatSession(currentUser.uid, localTitle);
         navigate(`/chat/${activeSessionId}`, { replace: true });
         
-        generateChatTitle(textToProcess).then(generatedTitle => {
-          updateSessionTitle(activeSessionId, generatedTitle);
-        });
+        // Removed the API-based generateChatTitle call here to preserve quota
       }
 
       await addChatMessage(activeSessionId, userMessage);
+      
       const aiMessageId = uuidv4();
       setMessages(prev => [...prev, { id: aiMessageId, text: '', role: 'assistant', isFavorite: false }]);
       setIsLoading(false); 
 
       const stream = await getGeminiResponseStream(messages, textToProcess);
       let fullResponseText = "";
+
       for await (const chunk of stream) {
         fullResponseText += chunk.text;
+        
         setMessages(prev => 
-          prev.map(msg => msg.id === aiMessageId ? { ...msg, text: fullResponseText } : msg)
+          prev.map(msg => 
+            msg.id === aiMessageId ? { ...msg, text: fullResponseText } : msg
+          )
         );
       }
+
       const finalAiMessage = { text: fullResponseText, role: 'assistant', isFavorite: false };
       await addChatMessage(activeSessionId, finalAiMessage);
+
     } catch (error) {
       console.error(error);
-      alert("Error processing message.");
+      alert("Error processing message. Your API quota might be exhausted for now.");
       setIsLoading(false);
     }
   };
@@ -109,12 +122,15 @@ export default function Chat() {
   const handleSubmit = (e) => {
     e?.preventDefault();
     if (!inputText.trim() || isLoading) return;
+
     const isMatch = validateCategoryMatch(inputText, selectedCategoryId);
+    
     if (!isMatch && !pendingSubmit) {
       setShowWarning(true);
       setPendingSubmit(true);
       return; 
     }
+
     setShowWarning(false);
     setPendingSubmit(false);
     processMessage(inputText);
@@ -130,7 +146,7 @@ export default function Chat() {
     <ChatLayout>
       <div className="flex flex-col h-full w-full relative overflow-hidden bg-white dark:bg-gray-950">
         
-        {/* Scrollable Message Area - Fixed padding for mobile */}
+        {/* Scrollable Message Area */}
         <div className="flex-1 overflow-y-auto pt-4 pb-40 px-4 scrollbar-hide">
           {isFetchingHistory ? (
             <div className="flex h-full items-center justify-center">
